@@ -12,15 +12,20 @@ class GokuaiFile extends GokuaiBase
     {
         $this->client_id = $org_client_id;
         $this->client_secret = $org_client_secret;
-        $this->curlInit();
     }
 
-    public function callAPI($http_method, $uri, array $data = [])
+    /**
+     * @param string $http_method POST or GET
+     * @param string $uri
+     * @param array $parameters
+     * @return bool
+     */
+    public function callAPI($http_method, $uri, array $parameters = [])
     {
-        $data['org_client_id'] = $this->client_id;
-        $data['dateline'] = time();
-        $data['sign'] = $this->getSign($data);
-        $this->sendRequest($this->api_url . $uri, $http_method, $data);
+        $parameters['org_client_id'] = $this->client_id;
+        $parameters['dateline'] = time();
+        $parameters['sign'] = $this->getSign($parameters);
+        $this->sendRequest($this->api_url . $uri, $http_method, $parameters);
         return $this->isOK();
     }
 }

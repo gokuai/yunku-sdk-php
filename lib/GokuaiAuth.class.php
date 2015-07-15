@@ -8,16 +8,21 @@ class GokuaiAuth extends GokuaiBase
 {
     protected $api_url = 'http://a.goukuai.cn';
 
-    const GRANT_TYPE_PASSWORD = 'password';
-    const GRANT_TYPE_ENT_PASSWORD = 'ent_password';
+    const GRANT_TYPE_PERSONAL_PASSWORD = 'password';
+    const GRANT_TYPE_ENTERPRISE_PASSWORD = 'ent_password';
 
-    public function __construct($client_id = '', $client_secret = '')
+    public function __construct($client_id, $client_secret)
     {
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
-        $this->curlInit();
     }
 
+    /**
+     * @param string $username account
+     * @param string $password password
+     * @param string $grant_type 'password' or 'ent_password'
+     * @return bool
+     */
     public function token($username, $password, $grant_type)
     {
         if (preg_match('/[\\/\\\\]/', $username)) {

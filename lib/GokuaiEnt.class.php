@@ -17,16 +17,21 @@ class GokuaiEnt extends GokuaiBase
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
         $this->token_type = $token_type;
-        $this->curlInit();
     }
 
-    public function callAPI($http_method, $uri, array $data = [])
+    /**
+     * @param string $http_method POST or GET
+     * @param string $uri
+     * @param array $parameters
+     * @return bool
+     */
+    public function callAPI($http_method, $uri, array $parameters = [])
     {
-        $data['token_type'] = $this->token_type;
-        $data['token'] = $this->token;
-        $data['dateline'] = time();
-        $data['sign'] = $this->getSign($data);
-        $this->sendRequest($this->api_url . $uri, $http_method, $data);
+        $parameters['token_type'] = $this->token_type;
+        $parameters['token'] = $this->token;
+        $parameters['dateline'] = time();
+        $parameters['sign'] = $this->getSign($parameters);
+        $this->sendRequest($this->api_url . $uri, $http_method, $parameters);
         return $this->isOK();
     }
 }
