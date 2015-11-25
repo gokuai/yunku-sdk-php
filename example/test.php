@@ -47,10 +47,14 @@ echo $ent_sdk->getHttpResponse() . PHP_EOL;
 //bind library, get org_client_id and org_client_secret
 $is_ok = $ent_sdk->callAPI('POST', '/1/org/bind', ['org_id' => 417162]);
 if (!$is_ok) {
-    echo $auth->getHttpResponse() . PHP_EOL;
+    echo $ent_sdk->getHttpResponse() . PHP_EOL;
     exit;
 }
 $result_json = $ent_sdk->getHttpResponse(true);
+if (!$result_json) {
+    echo $ent_sdk->getHttpResponse() . PHP_EOL;
+    exit;
+}
 $org_client_id = $result_json['org_client_id'];
 $org_client_secret = $result_json['org_client_secret'];
 
