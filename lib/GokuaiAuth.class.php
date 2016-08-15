@@ -10,6 +10,7 @@ class GokuaiAuth extends GokuaiBase
 
     const GRANT_TYPE_PERSONAL_PASSWORD = 'password';
     const GRANT_TYPE_ENTERPRISE_PASSWORD = 'ent_password';
+    const GRANT_TYPE_EXCHANGE_TOKEN = 'exchange_token';
 
     public function __construct($client_id, $client_secret)
     {
@@ -36,5 +37,11 @@ class GokuaiAuth extends GokuaiBase
             'grant_type' => $grant_type
         );
         return $this->callAPI('post', '/oauth2/token2', $data);
+    }
+
+    public function exchangeToken(array $params)
+    {
+        $params['grant_type'] = self::GRANT_TYPE_EXCHANGE_TOKEN;
+        return $this->callAPI('post', '/oauth2/token2', $params);
     }
 }
