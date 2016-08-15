@@ -1,40 +1,13 @@
 <?php
 
-require '../lib/GokuaiAuth.class.php';
-require '../lib/GokuaiEnt.class.php';
+require '../lib/GokuaiBase.class.php';
 require '../lib/GokuaiFile.class.php';
 
 $client_id = '';
 $client_secret = '';
 
-//personal account or enterprise admin account
-$username = '';
-$password = '';
-
-//personal;
-//$token_type = GokuaiBase::TOKEN_TYPE_PERSONAL;
-//$grant_type = GokuaiAuth::GRANT_TYPE_PERSONAL_PASSWORD;
-
-//enterprise admin
-$token_type = GokuaiBase::TOKEN_TYPE_ENTERPRISE;
-$grant_type = GokuaiAuth::GRANT_TYPE_ENTERPRISE_PASSWORD;
-
-
-
-//get token
-$auth = new GokuaiAuth($client_id, $client_secret);
-$is_ok = $auth->token($username, $password, GokuaiAuth::GRANT_TYPE_ENTERPRISE_PASSWORD);
-if (!$is_ok) {
-    echo $auth->getHttpResponse() . PHP_EOL;
-    exit;
-}
-$result_json = $auth->getHttpResponse(true);
-$token = $result_json['access_token'];
-
-
-
 //enterprise sdk
-$ent_sdk = new GokuaiEnt($token, $client_id, $client_secret, $token_type);
+$ent_sdk = new GokuaiBase($client_id, $client_secret);
 
 //libraries
 $is_ok = $ent_sdk->callAPI('GET', '/1/org/ls');

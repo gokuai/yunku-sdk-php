@@ -6,8 +6,6 @@ if (!class_exists('GokuaiBase')) {
 
 class GokuaiFile extends GokuaiBase
 {
-    protected $api_url = 'http://a-lib.goukuai.cn';
-
     public function __construct($org_client_id, $org_client_secret)
     {
         $this->client_id = $org_client_id;

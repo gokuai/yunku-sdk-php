@@ -7,8 +7,8 @@ class GokuaiBase
 
     public $timeout = 300;
     public $connecttimeout = 10;
-    protected static $user_agent = 'Yunku-SDK-PHP_1.0';
-    protected $api_url = 'http://a.goukuai.cn';
+    protected static $user_agent = 'Yunku-SDK-PHP_2.0';
+    protected $api_url = 'http://yk3-api-ent.gokuai.com';
     protected $curl;
     protected $http_code;
     protected $http_error;

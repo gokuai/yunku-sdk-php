@@ -6,10 +6,9 @@ if (!class_exists('GokuaiBase')) {
 
 class GokuaiAuth extends GokuaiBase
 {
-    protected $api_url = 'http://a.goukuai.cn';
+    protected $api_url = 'http://yk3-api.gokuai.com';
 
     const GRANT_TYPE_PERSONAL_PASSWORD = 'password';
-    const GRANT_TYPE_ENTERPRISE_PASSWORD = 'ent_password';
     const GRANT_TYPE_EXCHANGE_TOKEN = 'exchange_token';
 
     public function __construct($client_id, $client_secret)
