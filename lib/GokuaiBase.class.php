@@ -2,13 +2,10 @@
 
 class GokuaiBase
 {
-    const TOKEN_TYPE_ENTERPRISE = 'ent';
-    const TOKEN_TYPE_PERSONAL = '';
-
     public $timeout = 300;
     public $connecttimeout = 10;
-    protected static $user_agent = 'Yunku-SDK-PHP_2.0';
-    protected $api_url = 'http://yk3-api-ent.gokuai.com';
+    protected static $user_agent = 'Yunku-SDK-PHP_3.0';
+    protected $server = 'http://yk3-api-ent.gokuai.com';
     protected $curl;
     protected $http_code;
     protected $http_error;
@@ -17,16 +14,22 @@ class GokuaiBase
     protected $client_id;
     protected $client_secret;
 
-    public function __construct($client_id, $client_secret)
+    public function __construct($client_id, $client_secret, $server = null)
     {
         $this->client_id = $client_id;
         $this->client_secret = $client_secret;
+        if ($server) {
+            if (strpos($server, 'http') !== 0) {
+                $server = 'http://' . $server;
+            }
+            $this->server = $server;
+        }
     }
 
     /**
      * @param string $http_method POST or GET
      * @param string $uri
-     * @param array $parameters
+     * @param array  $parameters
      * @return bool
      */
     public function callAPI($http_method, $uri, array $parameters = [])
@@ -34,7 +37,7 @@ class GokuaiBase
         $parameters['client_id'] = $this->client_id;
         $parameters['dateline'] = time();
         $parameters['sign'] = $this->getSign($parameters);
-        $this->sendRequest($this->api_url . $uri, $http_method, $parameters);
+        $this->sendRequest($this->server . $uri, $http_method, $parameters);
         return $this->isOK();
     }
 

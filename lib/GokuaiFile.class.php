@@ -6,16 +6,15 @@ if (!class_exists('GokuaiBase')) {
 
 class GokuaiFile extends GokuaiBase
 {
-    public function __construct($org_client_id, $org_client_secret)
+    public function __construct($org_client_id, $org_client_secret, $server = null)
     {
-        $this->client_id = $org_client_id;
-        $this->client_secret = $org_client_secret;
+        parent::__construct($org_client_id, $org_client_secret, $server);
     }
 
     /**
      * @param string $http_method POST or GET
      * @param string $uri
-     * @param array $parameters
+     * @param array  $parameters
      * @return bool
      */
     public function callAPI($http_method, $uri, array $parameters = [])
@@ -23,7 +22,7 @@ class GokuaiFile extends GokuaiBase
         $parameters['org_client_id'] = $this->client_id;
         $parameters['dateline'] = time();
         $parameters['sign'] = $this->getSign($parameters);
-        $this->sendRequest($this->api_url . $uri, $http_method, $parameters);
+        $this->sendRequest($this->server . $uri, $http_method, $parameters);
         return $this->isOK();
     }
 }

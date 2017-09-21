@@ -6,21 +6,15 @@ if (!class_exists('GokuaiBase')) {
 
 class GokuaiAuth extends GokuaiBase
 {
-    protected $api_url = 'http://yk3-api.gokuai.com';
+    protected $server = 'http://yk3-api.gokuai.com';
 
     const GRANT_TYPE_PERSONAL_PASSWORD = 'password';
     const GRANT_TYPE_EXCHANGE_TOKEN = 'exchange_token';
 
-    public function __construct($client_id, $client_secret)
-    {
-        $this->client_id = $client_id;
-        $this->client_secret = $client_secret;
-    }
-
     /**
-     * @param string $username account
-     * @param string $password password
-     * @param string $grant_type 'password' or 'ent_password'
+     * @param string $username   account
+     * @param string $password   password
+     * @param string $grant_type 'password' or 'exchange_token'
      * @return bool
      */
     public function token($username, $password, $grant_type)
@@ -30,12 +24,12 @@ class GokuaiAuth extends GokuaiBase
         } else {
             $password_encoded = md5($password);
         }
-        $data = array(
+        $data = [
             'username' => $username,
             'password' => $password_encoded,
             'grant_type' => $grant_type
-        );
-        return $this->callAPI('post', '/oauth2/token2', $data);
+        ];
+        return $this->callAPI('post', '/oauth2/token', $data);
     }
 
     public function exchangeToken(array $params)
