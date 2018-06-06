@@ -43,6 +43,9 @@ class GokuaiBase
 
     protected function getSign(array $parameters)
     {
+        unset($parameters['filehash']);
+        unset($parameters['filesize']);
+        unset($parameters['sign']);
         if (!$parameters) {
             return '';
         }
